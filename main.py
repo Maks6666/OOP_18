@@ -1,23 +1,17 @@
-# Метаклас, що може змінювати ім'я класу залежно
-# від певних умов або параметрів.
+# Створіть метаклас, який автоматично додає певні
+# атрибути до всіх класів, що використовують його.
 
-class DynamicNameMeta(type):
+class NewMetaClass(type):
     def __new__(cls, name, bases, dct):
-        if 'original_name' in dct:
-            name = dct['original_name']
-            print(dct)
+        dct['new_attribute'] = "New attribute"
+        print(dct)
         return super().__new__(cls, name, bases, dct)
 
-class MyClass(metaclass=DynamicNameMeta):
-    ...
+class MyClass(metaclass=NewMetaClass):
+    pass
 
-print(MyClass.__name__)
-
-class NewClass(metaclass=DynamicNameMeta):
-    original_name = "New_Class"
-
-print(NewClass.__name__)
-
+obj = MyClass()
+print(obj.new_attribute)
 
 
 
